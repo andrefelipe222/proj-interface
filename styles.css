@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Tempo - Relatórios</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="phone">
+    <div class="header">
+      <span>Relatórios de tempo</span>
+    </div>
+    <div class="content">
+      <h3>Gráfico de Uso</h3>
+      <div style="width: 100%; max-width: 300px; margin: 0 auto;">
+        <canvas id="graficoUso" width="300" height="200"></canvas>
+      </div>
+      <h3>Limite diário</h3>
+      <p id="limite-msg"></p>
+      <button class="green" onclick="voltar()">Voltar</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

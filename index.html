@@ -1,0 +1,157 @@
+// Navegação
+function transicaopaginas(page) {
+  window.location.href = page;
+}
+
+function login() {
+  window.location.href = "agenda.html";
+}
+
+function voltar() {
+  window.history.back();
+}
+
+// Salvar atividades
+function salvarAtividade() {
+  const dataInput = document.getElementById('data-atividade');
+  const appInput = document.getElementById('app-atividade');
+  const tempoInput = document.getElementById('tempo-atividade');
+
+  if (!dataInput || !appInput || !tempoInput) return;
+
+  const data = dataInput.value;
+  const app = appInput.value;
+  const tempo = parseInt(tempoInput.value, 10);
+
+  if (!data || !app || isNaN(tempo)) {
+    alert("Preencha data, app e tempo corretamente!");
+    return;
+  }
+
+  let atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+  atividades.push({ data, app, tempo });
+  localStorage.setItem('atividades', JSON.stringify(atividades));
+
+  // Limpar campos após salvar
+  dataInput.value = "";
+  appInput.value = "";
+  tempoInput.value = "";
+
+  // Atualizar visualização imediatamente
+  carregarAtividades();
+  calcularResumo();
+}
+
+// Carregar atividades no Histórico de Uso
+function carregarAtividades() {
+  const lista = document.getElementById('lista-atividades');
+  if (!lista) return; // Se não estiver na página da agenda, interrompe sem dar erro
+
+  lista.innerHTML = "";
+  let atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+
+  if (atividades.length === 0) {
+    lista.innerHTML = "<p style='color: #7f8c8d; text-align: center; padding: 10px;'>Nenhuma atividade registrada.</p>";
+    return;
+  }
+
+  atividades.forEach(item => {
+    const card = document.createElement('div');
+    card.className = "item-salvo";
+    
+    const tempoValido = isNaN(parseInt(item.tempo)) ? 0 : parseInt(item.tempo);
+
+    card.innerHTML = `<strong>📌 App: ${item.app}</strong><br>
+                      <small>📅 Data: ${item.data}</small><br>
+                      <small>⏱️ Tempo: ${tempoValido} min</small>`;
+    
+    lista.appendChild(card);
+  });
+}
+
+// Resumo diário - Soma os minutos do dia atual
+function calcularResumo() {
+  const resumo = document.getElementById('resumo-diario');
+  if (!resumo) return; // Se não estiver na página da agenda, interrompe
+
+  let atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+  
+  const hoje = new Date();
+  const ano = hoje.getFullYear();
+  const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+  const dia = String(hoje.getDate()).padStart(2, '0');
+  const dataHojeFormatada = `${ano}-${mes}-${dia}`;
+
+  let totalHoje = atividades.reduce((acc, item) => {
+    if (item.data === dataHojeFormatada) {
+      const tempoNum = parseInt(item.tempo, 10);
+      return acc + (isNaN(tempoNum) ? 0 : tempoNum);
+    }
+    return acc;
+  }, 0);
+
+  resumo.innerHTML = `<strong>Total de uso hoje:</strong> ${totalHoje} min`;
+}
+
+// Gerar Gráfico de Uso nos Relatórios
+function gerarGrafico() {
+  const ctx = document.getElementById('graficoUso');
+  if (!ctx) return; // Se não estiver na página de relatórios, interrompe imediatamente
+
+  let atividades = JSON.parse(localStorage.getItem('atividades')) || [];
+
+  let dadosAgrupados = {};
+  atividades.forEach(item => {
+    const tempoNum = parseInt(item.tempo, 10);
+    const tempoValido = isNaN(tempoNum) ? 0 : tempoNum;
+    dadosAgrupados[item.app] = (dadosAgrupados[item.app] || 0) + tempoValido;
+  });
+
+  const labels = Object.keys(dadosAgrupados);
+  const valores = Object.values(dadosAgrupados);
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: 'Tempo (min)',
+        data: valores,
+        backgroundColor: '#3498db',
+        borderColor: '#2980b9',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  const limiteMsg = document.getElementById('limite-msg');
+  if (limiteMsg) {
+    let totalGeral = valores.reduce((a, b) => a + b, 0);
+    if (totalGeral > 120) {
+      limiteMsg.innerHTML = `⚠️ Limite ultrapassado! Total: ${totalGeral} min.`;
+      limiteMsg.style.color = "#e74c3c";
+    } else {
+      limiteMsg.innerHTML = `✅ Tempo sob controle. Total: ${totalGeral} min.`;
+      limiteMsg.style.color = "#2ecc71";
+    }
+  }
+}
+
+// Inicialização segura controlando o fluxo por elemento existente
+document.addEventListener("DOMContentLoaded", () => {
+  const btnSalvar = document.getElementById('btn-salvar');
+  if (btnSalvar) {
+    btnSalvar.addEventListener('click', salvarAtividade);
+  }
+
+  // Executa cada função isoladamente sem que uma quebre a outra
+  carregarAtividades();
+  calcularResumo();
+  gerarGrafico();
+});
