@@ -6,23 +6,24 @@
 }
 
 :root {
-  --primary: #6c63ff;
-  --primary-dark: #5a52d5;
-  --green: #2ecc71;
-  --green-dark: #27ae60;
-  --yellow: #f39c12;
-  --yellow-dark: #d68910;
-  --red: #e74c3c;
-  --red-dark: #c0392b;
-  --blue: #3498db;
-  --blue-dark: #2980b9;
-  --bg: #f0f2f5;
+  --primary: #1d6cf0;
+  --primary-dark: #1558cc;
+  --primary-light: #e8f1fe;
+  --green: #10b981;
+  --green-dark: #059669;
+  --yellow: #f59e0b;
+  --yellow-dark: #d97706;
+  --red: #ef4444;
+  --red-dark: #dc2626;
+  --blue: #1d6cf0;
+  --blue-dark: #1558cc;
+  --bg: #eef4fd;
   --card-bg: #ffffff;
-  --text: #2c3e50;
-  --text-light: #7f8c8d;
-  --border: #e0e0e0;
-  --shadow: 0 4px 20px rgba(0,0,0,0.12);
-  --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+  --text: #0f1d35;
+  --text-light: #64748b;
+  --border: #ccdeff;
+  --shadow: 0 4px 24px rgba(29,108,240,0.13);
+  --shadow-sm: 0 2px 8px rgba(29,108,240,0.08);
   --radius: 16px;
   --radius-sm: 10px;
   --transition: 0.2s ease;
@@ -30,7 +31,7 @@
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: var(--bg);
+  background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 40%, #eef4fd 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -45,7 +46,7 @@ body {
   max-width: 390px;
   background: var(--card-bg);
   border-radius: 36px;
-  box-shadow: var(--shadow), 0 0 0 8px #e0e0e0, 0 0 0 10px #c0c0c0;
+  box-shadow: var(--shadow), 0 0 0 8px #c7d9f8, 0 0 0 10px #a8c4f5;
   overflow: hidden;
   min-height: 700px;
   display: flex;
@@ -60,7 +61,7 @@ body {
 
 /* ===== HEADER ===== */
 .header {
-  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  background: linear-gradient(135deg, #1d6cf0 0%, #0d4fc7 60%, #0a3fa0 100%);
   color: white;
   padding: 20px 24px 16px;
   display: flex;
@@ -131,31 +132,40 @@ p {
 /* ===== TELA DE LOGIN ===== */
 .login-hero {
   text-align: center;
-  padding: 30px 10px 10px;
+  padding: 30px 16px 16px;
+  background: linear-gradient(160deg, #dbeafe 0%, #eff6ff 100%);
+  border-radius: 16px;
+  margin: -4px -4px 0;
 }
 
 .login-hero .app-icon {
-  font-size: 64px;
+  font-size: 68px;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  filter: drop-shadow(0 4px 8px rgba(29,108,240,0.25));
 }
 
 .login-hero h1 {
-  font-size: 32px;
-  font-weight: 800;
-  color: var(--primary);
-  margin-bottom: 6px;
+  font-size: 36px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #1d6cf0, #0a3fa0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .login-hero p {
   font-size: 14px;
-  color: var(--text-light);
+  color: #4a6fa5;
   margin-bottom: 0;
+  line-height: 1.5;
 }
 
 /* ===== SAUDAÇÃO ===== */
 .saudacao {
-  background: linear-gradient(135deg, #f8f9ff, #eef0ff);
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
   border-left: 4px solid var(--primary);
@@ -179,11 +189,11 @@ input[type="email"],
 select {
   width: 100%;
   padding: 12px 14px;
-  border: 2px solid var(--border);
+  border: 2px solid #ccdeff;
   border-radius: var(--radius-sm);
   font-size: 14px;
   color: var(--text);
-  background: #fafafa;
+  background: #f8fbff;
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
 }
@@ -191,7 +201,7 @@ select {
 input:focus,
 select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+  box-shadow: 0 0 0 3px rgba(29,108,240,0.15);
   background: white;
 }
 
@@ -232,26 +242,39 @@ button:active {
   transform: scale(0.97);
 }
 
-.btn-primary, button.green {
-  background: var(--green);
+.btn-primary {
+  background: linear-gradient(135deg, #1d6cf0, #0a3fa0);
   color: white;
-  box-shadow: 0 4px 12px rgba(46,204,113,0.3);
+  box-shadow: 0 4px 16px rgba(29,108,240,0.4);
+  font-size: 16px;
+  padding: 14px 20px;
 }
 
-.btn-primary:hover, button.green:hover {
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1558cc, #092e7a);
+  box-shadow: 0 6px 20px rgba(29,108,240,0.5);
+}
+
+button.green {
+  background: var(--green);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+}
+
+button.green:hover {
   background: var(--green-dark);
-  box-shadow: 0 6px 16px rgba(46,204,113,0.4);
+  box-shadow: 0 6px 16px rgba(16,185,129,0.4);
 }
 
 button.blue {
-  background: var(--blue);
+  background: linear-gradient(135deg, #1d6cf0, #1558cc);
   color: white;
-  box-shadow: 0 4px 12px rgba(52,152,219,0.3);
+  box-shadow: 0 4px 14px rgba(29,108,240,0.35);
 }
 
 button.blue:hover {
-  background: var(--blue-dark);
-  box-shadow: 0 6px 16px rgba(52,152,219,0.4);
+  background: linear-gradient(135deg, #1558cc, #0d4099);
+  box-shadow: 0 6px 18px rgba(29,108,240,0.45);
 }
 
 button.yellow {
@@ -283,7 +306,7 @@ button.ghost {
 }
 
 button.ghost:hover {
-  background: rgba(108,99,255,0.08);
+  background: rgba(29,108,240,0.08);
 }
 
 /* ===== CARDS DE ATIVIDADE ===== */
@@ -295,7 +318,8 @@ button.ghost:hover {
 
 .item-salvo {
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 1px solid #ccdeff;
+  border-left: 3px solid var(--primary);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
   box-shadow: var(--shadow-sm);
@@ -353,7 +377,7 @@ button.ghost:hover {
 
 /* ===== BARRA DE PROGRESSO ===== */
 .progress-container {
-  background: #fafafa;
+  background: linear-gradient(135deg, #f8fbff, #eff6ff);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 14px 16px;
@@ -462,8 +486,8 @@ button.ghost:hover {
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #f8f9ff, #eef0ff);
-  border: 1px solid #d6d3ff;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border: 1px solid #bfdbfe;
   border-radius: var(--radius-sm);
   padding: 12px;
   text-align: center;
