@@ -2,20 +2,64 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Tempo - O Ritmo do Seu Tempo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tempo — Relatórios</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="phone">
     <div class="header">
-      <span>Nome App</span>
+      <button class="back-btn" onclick="voltar()">←</button>
+      <span>📊 Relatórios</span>
+      <div style="width:34px"></div>
     </div>
     <div class="content">
-      <h2>Bem-vindo</h2>
-      <p>Gerencie seu tempo de forma inteligente.</p>
-      <button class="green" onclick="login()">Entrar</button>
+
+      <!-- Status do limite -->
+      <p id="limite-msg"></p>
+
+      <!-- Estatísticas resumidas -->
+      <div class="secao">
+        <h3>Estatísticas</h3>
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-total">0</span>
+            <span class="stat-label">Total (min)</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-media">0</span>
+            <span class="stat-label">Média/dia (min)</span>
+          </div>
+          <div class="stat-card full">
+            <span class="stat-value" id="stat-top-app" style="font-size:16px;">—</span>
+            <span class="stat-label">App mais usado</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico por app -->
+      <div class="secao">
+        <h3>Uso por aplicativo</h3>
+        <div style="position: relative; width: 100%; height: 200px;">
+          <canvas id="graficoUso"></canvas>
+        </div>
+      </div>
+
+      <!-- Gráfico por dia -->
+      <div class="secao">
+        <h3>Últimos 7 dias</h3>
+        <div style="position: relative; width: 100%; height: 200px;">
+          <canvas id="graficoDias"></canvas>
+        </div>
+      </div>
+
+      <!-- Botão voltar -->
+      <button class="ghost" onclick="voltar()">← Voltar</button>
+
     </div>
   </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
